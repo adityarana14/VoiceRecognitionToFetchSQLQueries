@@ -1,1 +1,1 @@
-This is the project to convert Voice data to SQL Queries and then fetch the data from Azure Data Base. 
+This is the project to convert Voice data to SQL Queries using LLM Models and then fetch the data from Azure Data Base. 
