@@ -1,14 +1,8 @@
-# DatabaseGPT
 
-[![Lint Code Base](https://github.com/marcominerva/DatabaseGPT/actions/workflows/linter.yml/badge.svg)](https://github.com/marcominerva/DatabaseGPT/actions/workflows/linter.yml)
-[![CodeQL](https://github.com/marcominerva/DatabaseGPT/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/marcominerva/DatabaseGPT/actions/workflows/github-code-scanning/codeql)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/marcominerva/TinyHelpers/blob/master/LICENSE)
 
 Query a database using natural language.
 
 Thanks to [Adam Buckley](https://github.com/happyadam73/tsql-chatgpt) for the [original inspiration](https://www.linkedin.com/pulse/query-your-data-azure-sql-using-natural-language-chatgpt-adam-buckley/) for this project.
-
-![](https://raw.githubusercontent.com/marcominerva/DatabaseGPT/master/assets/DatabaseGptWeb.gif)
 
 ### Usage
 
@@ -73,24 +67,9 @@ You need to set the required values in the **appsettings.json** file:
 }
 ```
 
-For more information about how to configure the ChatGPT integration, refer to the documentation of [ChatGptNet](https://github.com/marcominerva/ChatGptNet).
-
 > **Note**
 If possible, use GPT-4 models. Current experiments demonstrate that they are more accurate than GPT-3 models when generating queries.
 
-#### The Web Application
-
-The [DatabaseGptWeb](https://github.com/marcominerva/DatabaseGPT/tree/master/samples/DatabaseGpt.Web) project is a Web Application that shows how to provide a UI for **DatabaseGPT**. It requires .NET 8.0 SDK or later. To execute it, you need to set the required values in the [appsettings.json](https://github.com/marcominerva/DatabaseGPT/blob/master/samples/DatabaseGpt.Web/appsettings.json) file, as described above.
-
-You can find a live demo that uses the [Northwind database](https://learn.microsoft.com/dotnet/framework/data/adonet/sql/linq/downloading-sample-databases) on https://databasegpt.azurewebsites.net. It relies on a deployment with a limited quota, so be patient if you get some error when trying it :)
-
-#### The Console Application
-
-![](https://raw.githubusercontent.com/marcominerva/DatabaseGPT/master/assets/DatabaseGptConsole.gif)
-
-The [DatabaseGptConsole](https://github.com/marcominerva/DatabaseGPT/tree/master/samples/DatabaseGptConsole) project is a Console Application that can be used to test the library. It requires .NET 8.0 SDK or later. To execute it, you need to set the required values in the [appsettings.json](https://github.com/marcominerva/DatabaseGPT/blob/master/samples/DatabaseGptConsole/appsettings.json) file, as described above.
-
-If you just want to run the application on Windows, you can download the binaries from the [Releases section](https://github.com/marcominerva/DatabaseGPT/releases).
 
 ### Configuration
 
@@ -127,8 +106,6 @@ Giving this schema, the model will be able to infer the following information, f
 - The `SupplierId` column in the `Products` table is a foreign key to the `Id` column in the `Suppliers` table.
 - The `CategoryId` column in the `Products` table is a foreign key to the `Id` column in the `Categories` table.
 
-If in the schema there are tables and columns and you never want to be used, you can exclude them from the query generation process by adding them to the `ExcludedTables` and `ExcludedColumns` arrays in the [appsettings.json](https://github.com/marcominerva/DatabaseGPT/blob/master/src/DatabaseGptConsole/appsettings.json#L17-L18) file. For example:
-
 ```
 "DatabaseSettings": {
     "ExcludedTables": [ "dbo.CheckView" ],       
@@ -136,7 +113,7 @@ If in the schema there are tables and columns and you never want to be used, you
 }
 ```
 
-On the other hand, if you want to use only a particular set of tables, you can add them to the `IncludedTables` array in the [appsettings.json](https://github.com/marcominerva/DatabaseGPT/blob/master/src/DatabaseGptConsole/appsettings.json#L16) file. For example:
+On the other hand, if you want to use only a particular set of tables, you can add them to the `IncludedTables` array in the [appsettings.json]
 
 ```json
 "DatabaseSettings": {
@@ -155,8 +132,6 @@ CREATE TABLE dbo.Attachments(
 )
 ```
 
-In this case, the `Status` column contains an integer value that represents the status of the attachment. In order to make the query generation process more accurate, you need to tell the library that the `Status` column is an enumeration. You can do this by adding some comments in the [SystemMessage.txt](https://github.com/marcominerva/DatabaseGPT/blob/master/src/DatabaseGptConsole/SystemMessage.txt) file, using a natural language:
-
 ```
 - If the 'Status' column of table 'dbo.Attachments' is equals to 0, it means that the attachment has not been processed yet.
 - If the 'Status' column of table 'dbo.Attachments' is equals to 1, it means that the attachment has been processed and approved.
@@ -166,8 +141,6 @@ In this case, the `Status` column contains an integer value that represents the 
 You can add as many indications as you need. The library will use this information to generate the query.
 
 #### Retry strategy
-
-As we know, GPT models are not perfect. Sometimes, the generated query is not valid. In this case, the library will retry to generate the query, using a different approach. The number of retries is configured in the [appsettings.json](https://github.com/marcominerva/DatabaseGPT/blob/master/src/DatabaseGptConsole/appsettings.json#L19) file:
 
 ```json
 "DatabaseSettings": {
